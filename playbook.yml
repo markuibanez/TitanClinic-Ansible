@@ -1,4 +1,24 @@
 ---
-- hosts: target
+
+- hosts: publicip
+  sudo: true
   tasks:
-   - ping:
+   - shell: " docker ps | grep simulation5"
+     register: docker_res
+     ignore_errors: true
+
+   - debug:
+       var: docker_res
+
+   - name: destroy current container
+     shell: docker rm -f simulation5
+     when: docker_res|succeeded
+
+   - name: copy workspace
+     shell: docker cp jenkins-slave:/workspace/draft/ansible-job /tmp/
+
+   - name: build docker image
+     command: docker build -t testansible:1.1 /tmp/ansible-job/
+
+   - name: docker run
+     shell: docker run --name simulation5 -d -p 8082:8082 testansible:1.1
