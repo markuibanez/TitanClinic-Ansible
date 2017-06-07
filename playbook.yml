@@ -3,7 +3,7 @@
 - hosts: target
   sudo: true
   tasks:
-   - shell: " docker ps | grep simulation5"
+   - shell: " docker ps -a | grep simulation5"
      register: docker_res
      ignore_errors: true
 
