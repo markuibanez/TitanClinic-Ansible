@@ -2,7 +2,7 @@ FROM tomcat:latest
 
 MAINTAINER Surveycorps
 
-WORKDIR /usr/local/tomcat/
+WORKDIR f8d5e486f75a:/var/jenkins_home/jobs/SUPERMAN/jobs/build-job/workspace/target/
 
 EXPOSE 8082
 
