@@ -15,7 +15,7 @@
      when: docker_res|succeeded
 
    - name: copy workspace
-     shell: docker cp jenkins-slave:/workspace/draft/ansible-job /tmp/
+     shell: docker cp jenkins-slave:/workspace/SUPERMAN/ansible-job /tmp/
 
    - name: build docker image
      command: docker build -t testansible:1.1 /tmp/ansible-job/
