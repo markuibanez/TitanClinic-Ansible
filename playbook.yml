@@ -19,8 +19,10 @@
      shell: "docker rm -f {{ dockername }}"
      when: docker_res|succeeded
 
-   - name: delete destination workspace
-     shell: "rm -rf {{ destination }}"
+   - name: Clean destination folder
+     file:
+       state: absent
+       path: "{{ destination }}"
 
    - name: copy workspace
      shell: "docker cp jenkins-slave:{{ workspace }}/. {{ destination }}"
