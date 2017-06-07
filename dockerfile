@@ -2,7 +2,7 @@ FROM tomcat:latest
 
 MAINTAINER Surveycorps
 
-WORKDIR usr/local/tomcat
+WORKDIR /usr/local/tomcat
 
 EXPOSE 8082
 
