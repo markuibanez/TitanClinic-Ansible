@@ -14,32 +14,16 @@
 #   - debug:
 #       var: docker_res
 
-#   - name: copy workspace
-#     shell: "docker cp jenkins-slave:{{ workspace }}/. {{ destination }}"
-
-
-#   - shell: "cat {{ destination }}buildid.txt"
-#     register: buildid
-
-#   - shell: "cat {{ destination }}workspace.txt"
-#     register: workspace
-
-   - debug:
-      var: buildid
-
-   - debug:
-      var: workspace
-
    - name: destroy current container
      shell: "docker rm -f {{ dockername }}"
      when: docker_res|succeeded
 
-#   - name: copy workspace
-#     shell: "docker cp jenkins-slave:{{ workspace }}/ {{ destination }}"
+   - name: copy workspace
+     shell: "docker cp jenkins-slave:{{ workspace }}/. {{ destination }}"
 
-#   - name: build docker image
-#     command: "docker build -t {{ dockername }}:{{ buildid }} {{ destination }}"
+   - name: build docker image
+     command: "docker build -t {{ dockername }}:{{ buildid }} {{ destination }}"
 
-#   - name: docker run
-#     shell: "docker run --name {{ dockername }}  -d -p 8082:8082 {{ dockername }}:{{ buildid }}"
+   - name: docker run
+     shell: "docker run --name {{ dockername }}  -d -p 8082:8082 {{ dockername }}:{{ buildid }}"
 
