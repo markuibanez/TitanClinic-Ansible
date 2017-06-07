@@ -7,14 +7,15 @@
    dockername: "sctomcat"
 
   tasks:
-   - shell: "docker ps -a | grep {{ dockername }}"
+   - name: Check if container exist
+     shell: "docker ps -a | grep {{ dockername }}"
      register: docker_res
      ignore_errors: true
 
 #   - debug:
 #       var: docker_res
 
-   - name: destroy current container
+   - name: destroy current container if exist
      shell: "docker rm -f {{ dockername }}"
      when: docker_res|succeeded
 
