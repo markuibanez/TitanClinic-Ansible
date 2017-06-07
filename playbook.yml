@@ -1,6 +1,6 @@
 ---
 
-- hosts: publicip
+- hosts: 10.10.1.127
   sudo: true
   tasks:
    - shell: " docker ps | grep simulation5"
