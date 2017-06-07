@@ -1,24 +1,45 @@
 ---
 
-- hosts: target
+- hosts: ec2instance
   sudo: true
+  vars:
+   destination: "/tmp/tomcatworkspace"
+   dockername: "sctomcat"
+
   tasks:
-   - shell: " docker ps -a | grep simulation5"
+   - shell: "docker ps -a | grep {{ dockername }}"
      register: docker_res
      ignore_errors: true
 
+#   - debug:
+#       var: docker_res
+
+#   - name: copy workspace
+#     shell: "docker cp jenkins-slave:{{ workspace }}/. {{ destination }}"
+
+
+#   - shell: "cat {{ destination }}buildid.txt"
+#     register: buildid
+
+#   - shell: "cat {{ destination }}workspace.txt"
+#     register: workspace
+
    - debug:
-       var: docker_res
+      var: buildid
+
+   - debug:
+      var: workspace
 
    - name: destroy current container
-     shell: docker rm -f simulation5
+     shell: "docker rm -f {{ dockername }}"
      when: docker_res|succeeded
 
-   - name: copy workspace
-     shell: docker cp jenkins-slave:/workspace/SUPERMAN/ansible-job /tmp/
+#   - name: copy workspace
+#     shell: "docker cp jenkins-slave:{{ workspace }}/ {{ destination }}"
 
-   - name: build docker image
-     command: docker build -t testansible:1.1 /tmp/ansible-job/
+#   - name: build docker image
+#     command: "docker build -t {{ dockername }}:{{ buildid }} {{ destination }}"
 
-   - name: docker run
-     shell: docker run --name simulation5 -d -p 8082:8082 testansible:1.1
+#   - name: docker run
+#     shell: "docker run --name {{ dockername }}  -d -p 8082:8082 {{ dockername }}:{{ buildid }}"
+
