@@ -1,4 +1,4 @@
-FROM tomcat:latest
+FROM tomcat:8.0
 
 MAINTAINER Surveycorps
 
